@@ -8,10 +8,14 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import './bootstrap';
-import PostList from './PostList';
-import Post from './Post';
 import ApolloClient from 'apollo-boost';
 import VueApollo from 'vue-apollo';
+
+import PostList from './PostList';
+import Post from './Post';
+import TopicPostList from './TopicPostList';
+import AuthorPostList from './AuthorPostList';
+import NotFound from './NotFound';
 
 // window.Vue = require('vue');
 window.Vue = Vue;
@@ -33,6 +37,21 @@ const routes = [
         path: '/post/:id',
         name: 'post',
         component: Post
+    },
+    {
+        path: '/topics/:slug',
+        name: 'topic',
+        component: TopicPostList
+    },
+    {
+        path: '/authors/:id',
+        name: 'author',
+        component: AuthorPostList
+    },
+    {
+        path: '*',
+        name: '404',
+        component: NotFound
     }
 ];
 
@@ -53,6 +72,10 @@ const router = new VueRouter({
     mode: 'history', //this line use to clean url vue without #
     routes
 });
+
+import moment from "moment";
+Vue.filter("timeAgo", value => moment(value). fromNow());
+Vue.filter("longDate", value => moment(value). format("MMMM Do YYYY"));
 
 const app = new Vue({
     el: '#app',
